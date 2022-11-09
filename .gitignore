@@ -330,3 +330,6 @@ universium_test/media/
 .env
 .envs/*
 !.envs/.local/
+
+# Import data/*.csv fiels
+data/*
