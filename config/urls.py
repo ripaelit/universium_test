@@ -6,6 +6,9 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter, SimpleRouter
+
+from universium_test.movies.api.views import ActorViewSet, MovieViewSet
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -33,6 +36,17 @@ urlpatterns += [
         name="api-docs",
     ),
 ]
+
+if settings.DEBUG:
+    router = DefaultRouter()
+else:
+    router = SimpleRouter()
+
+router.register("movies", MovieViewSet)
+router.register("actor_stats", ActorViewSet)
+
+urlpatterns += router.urls
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
